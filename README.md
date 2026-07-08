@@ -1,13 +1,8 @@
 # BI-BEGR Culture Dashboard
 > Dasbor Pemantauan Budaya KONSOL BEGR Bank Indonesia Berbasis Serverless Google Apps Script dan Google Sheets
 
-[![React](https://img.shields.io/badge/React-19.0-61DAFB?style=flat-square&logo=react&logoColor=61DAFB)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-6.2-646CFF?style=flat-square&logo=vite&logoColor=white)](https://vite.dev/)
-[![Google Apps Script](https://img.shields.io/badge/Google_Apps_Script-Serverless-4285F4?style=flat-square&logo=google&logoColor=white)](https://developers.google.com/apps-script)
-[![Google Sheets](https://img.shields.io/badge/Google_Sheets-Database-34A853?style=flat-square&logo=google-sheets&logoColor=white)](https://www.google.com/sheets/about/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![License](https://img.shields.io/badge/License-Proprietary-red.svg?style=flat-square)](#)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/) &nbsp; [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/) &nbsp; [![Google Apps Script](https://img.shields.io/badge/Google%20Apps%20Script-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/apps-script) &nbsp; [![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)](https://www.google.com/sheets/about/) &nbsp; [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) &nbsp; [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
 
 ---
 
@@ -197,9 +192,6 @@ npx clasp push
 ## 8. Tim Pengembang & Kolaborasi
 
 Aplikasi ini dikembangkan melalui kemitraan kolaboratif antara pihak-pihak berikut:
-* **Ikhsan Kamal** (Owner & Lead Architect)
-  * [![LinkedIn](https://img.shields.io/badge/LinkedIn-Ikhsan_Kamal-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Ikhsan%20Kamal)
-  * [![Instagram](https://img.shields.io/badge/Instagram-iamikhsank-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/iamikhsank)
-* **Worksense Analytics** (Mitra Kolaborasi Pengembangan Sistem, Otomasi, dan Analisis Data)
-  * [![LinkedIn](https://img.shields.io/badge/LinkedIn-Worksense_Analytics-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Worksense%20Analytics)
-  * [![Instagram](https://img.shields.io/badge/Instagram-worksense.analytics-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/worksense.analytics)
+* **Ikhsan Kamal** (Owner & Lead Architect) &nbsp; [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Ikhsan%20Kamal) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/iamikhsank)
+* **Worksense Analytics** (Mitra Kolaborasi) &nbsp; [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Worksense%20Analytics) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/worksense.analytics)
+

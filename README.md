@@ -198,4 +198,8 @@ npx clasp push
 
 Aplikasi ini dikembangkan melalui kemitraan kolaboratif antara pihak-pihak berikut:
 * **Ikhsan Kamal** (Owner & Lead Architect)
+  * [![LinkedIn](https://img.shields.io/badge/LinkedIn-Ikhsan_Kamal-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Ikhsan%20Kamal)
+  * [![Instagram](https://img.shields.io/badge/Instagram-iamikhsank-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/iamikhsank)
 * **Worksense Analytics** (Mitra Kolaborasi Pengembangan Sistem, Otomasi, dan Analisis Data)
+  * [![LinkedIn](https://img.shields.io/badge/LinkedIn-Worksense_Analytics-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Worksense%20Analytics)
+  * [![Instagram](https://img.shields.io/badge/Instagram-worksense.analytics-E4405F?style=flat-square&logo=instagram&logoColor=white)](https://www.instagram.com/worksense.analytics)

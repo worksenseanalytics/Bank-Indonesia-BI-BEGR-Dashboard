@@ -191,3 +191,11 @@ npx clasp push
 * **[src/lib/printHelper.ts](file:///c:/Users/IKHSAN%20KAMAL/Downloads/PROJECT%20-%20APPSCRIPT/bi---wide/src/lib/printHelper.ts)**: Mengatur optimasi tata letak media cetak (PDF) secara landscape dan pembersihan tema gelap sementara saat inisiasi perintah cetak browser.
 * **[gas-src/Code.gs](file:///c:/Users/IKHSAN%20KAMAL/Downloads/PROJECT%20-%20APPSCRIPT/bi---wide/gas-src/Code.gs)**: Mengatur API server backend, optimasi latensi menggunakan penyimpanan Cache kompresi GZIP, serta menangani modifikasi sinkronisasi data sel spreadsheet.
 * **[gas-src/setup.gs](file:///c:/Users/IKHSAN%20KAMAL/Downloads/PROJECT%20-%20APPSCRIPT/bi---wide/gas-src/setup.gs)**: Menginisialisasi format lembar kerja `KONSOL BEGR` dan `PENGATURAN UMUM` secara otomatis, meliput pembuatan 94 kolom header, pembekuan baris, formula acuan, dan pengisian data contoh (*seed data*).
+
+---
+
+## 8. Tim Pengembang & Kolaborasi
+
+Aplikasi ini dikembangkan melalui kemitraan kolaboratif antara pihak-pihak berikut:
+* **Ikhsan Kamal** (Owner & Lead Architect)
+* **Worksense Analytics** (Mitra Kolaborasi Pengembangan Sistem, Otomasi, dan Analisis Data)

@@ -516,6 +516,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
                   <div key={activeTabDist} className="h-44 w-full min-w-0">
                     <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                       <BarChart
+                        id="cml-distribution-bar-chart"
                         data={selectedRegion.chartData}
                         margin={{ top: 10, right: 10, left: -25, bottom: 5 }}
                       >
@@ -570,6 +571,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
             <div key={isYAxisDynamic ? "dynamic" : "static"} className="h-64 w-full flex-1 min-h-[240px] min-w-0">
               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart
+                  id="evp-pilar-averages-bar-chart"
                   data={evpPilarChartData}
                   margin={{ top: 15, right: 10, left: -25, bottom: 5 }}
                 >
@@ -669,7 +671,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
 
           <div className="h-[300px] w-full flex items-center justify-center relative min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-              <RadarChart cx="50%" cy="50%" outerRadius="80%" data={radarNNSData}>
+              <RadarChart id="nns-radar-chart" cx="50%" cy="50%" outerRadius="80%" data={radarNNSData}>
                 <PolarGrid stroke="#e2e8f0" className="dark:stroke-slate-800/25" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 11, fontWeight: "800" }} />
                 <PolarRadiusAxis angle={30} domain={[0, 4]} tick={{ fill: "#94a3b8", fontSize: 9.5, fontWeight: "600" }} axisLine={false} tickLine={false} />
@@ -731,6 +733,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
           <div key="kp-kpw-comparison-chart" className="h-64 w-full relative min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <BarChart
+                id="kp-kpw-comparison-bar-chart"
                 data={kpKpwComparisonChartData}
                 margin={{ top: 15, right: 10, left: -25, bottom: 5 }}
               >
@@ -759,6 +762,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
             <div key="cp-averages-chart" className="h-68 w-full min-w-0">
               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart
+                  id="cp-averages-bar-chart"
                   data={cpChartData}
                   margin={{ top: 15, right: 10, left: -25, bottom: 5 }}
                 >

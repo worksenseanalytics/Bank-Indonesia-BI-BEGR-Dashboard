@@ -617,7 +617,7 @@ export function SatkerDetailView() {
 
           <div key="pilar-chart-wrapper" className="h-72 w-full min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-              <BarChart data={pilarChartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <BarChart id="satker-pilar-bar-chart" data={pilarChartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                 <XAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 11.5, fontWeight: "bold" }} axisLine={false} tickLine={false} />
                 <YAxis domain={pilarDomain} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
@@ -642,7 +642,7 @@ export function SatkerDetailView() {
 
           <div key="evp-chart-wrapper" className="h-72 w-full min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-              <BarChart data={evpChartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
+              <BarChart id="satker-evp-bar-chart" data={evpChartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                 <XAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 11.5, fontWeight: "bold" }} axisLine={false} tickLine={false} />
                 <YAxis domain={evpDomain} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
@@ -786,6 +786,7 @@ export function SatkerDetailView() {
             <div key={`cp-detail-wrapper-${selectedCp}-${cpSortOrder}`} style={{ height: `${Math.max(380, cpDetailChartData.length * 35)}px`, width: "100%", minWidth: 0 }}>
               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart
+                  id="satker-cp-detail-bar-chart"
                   layout="vertical"
                   data={cpDetailChartData}
                   margin={{ top: 2, right: 10, left: 10, bottom: 5 }}
@@ -821,7 +822,7 @@ export function SatkerDetailView() {
 
           <div className="h-[400px] w-full flex items-center justify-center relative min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-              <RadarChart cx="50%" cy="50%" outerRadius="75%" data={programDynamicsData}>
+              <RadarChart id="satker-cp-radar-chart" cx="50%" cy="50%" outerRadius="75%" data={programDynamicsData}>
                 <PolarGrid stroke="#e2e8f0" className="dark:stroke-slate-800/25" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 10, fontWeight: "800" }} />
                 <PolarRadiusAxis angle={30} domain={[0, 4]} tick={{ fill: "#94a3b8", fontSize: 9, fontWeight: "600" }} axisLine={false} tickLine={false} />
@@ -848,7 +849,7 @@ export function SatkerDetailView() {
 
           <div className="h-80 w-full min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-              <BarChart data={nnsCpComparisonData} margin={{ top: 15, right: 10, left: -20, bottom: 5 }}>
+              <BarChart id="satker-nns-cp-comparison-chart" data={nnsCpComparisonData} margin={{ top: 15, right: 10, left: -20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                 <XAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 10, fontWeight: "bold" }} axisLine={false} tickLine={false} />
                 <YAxis domain={[0, 4]} tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
@@ -995,6 +996,7 @@ export function SatkerDetailView() {
               <div key={`cp-detail-fullscreen-wrapper-${selectedCp}-${cpSortOrder}`} className="w-full relative min-w-0" style={{ height: `${Math.max(450, cpDetailChartData.length * 45)}px`, minWidth: 0 }}>
                 <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <BarChart
+                    id="satker-cp-detail-expanded-bar-chart"
                     layout="vertical"
                     data={cpDetailChartData}
                     margin={{ top: 10, right: 20, left: 20, bottom: 10 }}

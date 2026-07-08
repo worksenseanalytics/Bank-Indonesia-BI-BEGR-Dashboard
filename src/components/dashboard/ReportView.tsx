@@ -576,6 +576,7 @@ export function ReportView() {
         <div key={`dimension-${selectedScope}-${selectedDimensionType}`} className="h-80 w-full mt-4 min-w-0">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
             <BarChart 
+              id="report-dimension-bar-chart"
               data={filteredDimensionData} 
               margin={{ top: 25, right: 10, left: -20, bottom: 5 }}
             >
@@ -716,7 +717,7 @@ export function ReportView() {
               </div>
               <div className="relative w-full h-full z-10">
                 <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-                  <PieChart>
+                  <PieChart id="report-cml-pie-chart">
                     <Pie
                       data={pieData}
                       cx="50%"

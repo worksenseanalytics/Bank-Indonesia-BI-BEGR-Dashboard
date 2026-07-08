@@ -1,0 +1,16 @@
+import * as Recharts from "recharts";
+console.log("ResponsiveContainer: ", Object.keys(Recharts).includes("ResponsiveContainer"));
+console.log("RadarChart: ", Object.keys(Recharts).includes("RadarChart"));
+console.log("Radar: ", Object.keys(Recharts).includes("Radar"));
+console.log("PolarGrid: ", Object.keys(Recharts).includes("PolarGrid"));
+console.log("PolarAngleAxis: ", Object.keys(Recharts).includes("PolarAngleAxis"));
+console.log("PolarRadiusAxis: ", Object.keys(Recharts).includes("PolarRadiusAxis"));
+console.log("BarChart: ", Object.keys(Recharts).includes("BarChart"));
+console.log("Bar: ", Object.keys(Recharts).includes("Bar"));
+console.log("XAxis: ", Object.keys(Recharts).includes("XAxis"));
+console.log("YAxis: ", Object.keys(Recharts).includes("YAxis"));
+console.log("CartesianGrid: ", Object.keys(Recharts).includes("CartesianGrid"));
+console.log("Tooltip: ", Object.keys(Recharts).includes("Tooltip"));
+console.log("Legend: ", Object.keys(Recharts).includes("Legend"));
+console.log("Cell: ", Object.keys(Recharts).includes("Cell"));
+console.log("ReferenceLine: ", Object.keys(Recharts).includes("ReferenceLine"));

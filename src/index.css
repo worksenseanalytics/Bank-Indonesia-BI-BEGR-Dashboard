@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
+@import "tailwindcss";
+@source ".";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-150: #e2e8f0;
+  --color-slate-200: #cbd5e1;
+  --color-slate-250: #b8c5d6;
+  --color-slate-300: #94a3b8;
+  --color-slate-350: #7e91a7;
+  --color-slate-400: #64748b;
+  --color-slate-450: #556880;
+  --color-slate-500: #475569;
+  --color-slate-550: #3b4859;
+  --color-slate-600: #334155;
+  --color-slate-650: #2a3647;
+  --color-slate-700: #1e293b;
+  --color-slate-750: #17202d;
+  --color-slate-800: #162032;
+  --color-slate-850: #0e1524;
+  --color-slate-900: #0a0f1d;
+  --color-slate-950: #050811;
+
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #cbd5e1;
+  --color-gray-300: #94a3b8;
+  --color-gray-400: #64748b;
+  --color-gray-500: #475569;
+  --color-gray-600: #334155;
+  --color-gray-700: #1e293b;
+  --color-gray-800: #162032;
+  --color-gray-900: #0a0f1d;
+  --color-gray-950: #050811;
+
+  --shadow-xs: 0 4px 16px rgba(0, 0, 0, 0.65), 0 1px 5px rgba(0, 0, 0, 0.45);
+  --shadow-sm: 0 6px 24px rgba(0, 0, 0, 0.70), 0 2px 8px rgba(0, 0, 0, 0.50);
+  --shadow-md: 0 14px 44px rgba(0, 0, 0, 0.80), 0 4px 16px rgba(0, 0, 0, 0.60);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.90), 0 6px 24px rgba(0, 0, 0, 0.70);
+}
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Product Sans", "Google Sans Display", "Google Sans", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Additional slate steps for light mode used in the code */
+  --color-slate-150: #ebf0f5;
+  --color-slate-250: #d8e0e8;
+  --color-slate-350: #a3b2c2;
+  --color-slate-450: #76889d;
+  --color-slate-550: #506176;
+  --color-slate-650: #3b495a;
+  --color-slate-750: #263344;
+  --color-slate-850: #141f2d;
+  
+  --shadow-xs: 0 4px 12px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-sm: 0 6px 20px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.10);
+  --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.18);
+  --shadow-lg: 0 22px 60px rgba(0, 0, 0, 0.38), 0 6px 20px rgba(0, 0, 0, 0.28);
+
+  --color-dianne: #FD7979;
+  --color-crusta: #FDACAC;
+  --color-sun: #FFCDC9;
+  --color-olivine: #FEEAC9;
+  --color-patina: #FD7979;
+}
+
+
+/* ======== CONTAINER CORNER OVERRIDES (15PX) ======== */
+.rounded-\[28px\],
+.rounded-\[24px\],
+.rounded-3xl,
+.rounded-2xl {
+  border-radius: 15px !important;
+}
+
+/* ======== PRINT STYLES ======== */
+@page {
+  size: A4 landscape;
+  margin: 10mm 8mm;
+}
+
+@media print {
+  /* ---- GLOBAL RESETS ---- */
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    color: #1e293b !important;
+    font-size: 10px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    overflow: visible !important;
+    height: auto !important;
+    width: 100% !important;
+  }
+
+  /* Force EVERY container to release scroll/overflow constraints */
+  *, *::before, *::after {
+    overflow: visible !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Force all block-level containers to auto height */
+  div, section, article, aside, main, header, footer {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+  }
+
+  /* ---- HIDE NON-CONTENT ELEMENTS ---- */
+  [data-print-hide],
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ---- SHOW PRINT-ONLY ELEMENTS ---- */
+  [data-print-header] {
+    display: flex !important;
+    visibility: visible !important;
+  }
+
+  [data-print-only],
+  .print-only {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* ---- LAYOUT NORMALIZATION ---- */
+  /* Remove flex column height constraints from root app */
+  .h-screen,
+  [class*="h-screen"],
+  [class*="min-h-0"],
+  [class*="overflow-hidden"],
+  [class*="overflow-y-auto"],
+  [class*="overflow-x-auto"] {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Main content: full-width, no padding constraints */
+  main {
+    overflow: visible !important;
+    padding: 4px 8px !important;
+    margin: 0 !important;
+  }
+
+  /* ---- VISUAL ELEMENTS ---- */
+  /* Cards: avoid page break inside */
+  [class*="rounded-"] {
+    break-inside: avoid;
+    border-radius: 6px !important;
+  }
+
+  table {
+    width: 100% !important;
+    font-size: 9px !important;
+    break-inside: auto;
+  }
+
+  thead {
+    display: table-header-group;
+  }
+
+  tr {
+    break-inside: avoid;
+  }
+
+  th, td {
+    padding: 3px 5px !important;
+  }
+
+  /* SVG Charts (Recharts): ensure they render in print */
+  svg {
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .recharts-wrapper,
+  .recharts-surface {
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Color badges and progress bars: force color printing */
+  [class*="bg-emerald"],
+  [class*="bg-rose"],
+  [class*="bg-amber"],
+  [class*="bg-blue"],
+  [class*="bg-indigo"],
+  [class*="bg-cyan"],
+  [class*="bg-slate"],
+  [class*="bg-gradient"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* ---- DARK MODE NEUTRALIZATION ---- */
+  .dark,
+  .dark * {
+    background-color: transparent !important;
+    color: #1e293b !important;
+  }
+  /* Re-allow colored backgrounds on badges */
+  .dark [style*="background"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Remove hover/interactive states */
+  a, button {
+    text-decoration: none !important;
+    cursor: default !important;
+  }
+
+  /* Subtle borders for cards in print */
+  [class*="border-slate"] {
+    border-color: #e2e8f0 !important;
+  }
+
+  /* Legacy compat */
+  .print-table { width: 100%; border-collapse: collapse; }
+  .print-table th, .print-table td { border: 1px solid #999; padding: 4px; font-size: 10px; }
+  .print-break-inside-avoid { break-inside: avoid; }
+}

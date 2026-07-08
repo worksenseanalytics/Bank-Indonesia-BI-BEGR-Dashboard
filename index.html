@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BI-BEGR Culture Dashboard - KONSOL BEGR</title>
+    
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19.0.0",
+          "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime",
+          "react/jsx-dev-runtime": "https://esm.sh/react@19.0.0/jsx-dev-runtime",
+          "react-dom": "https://esm.sh/react-dom@19.0.0",
+          "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+          "recharts": "https://esm.sh/recharts@3.8.1?external=react,react-dom",
+          "lucide-react": "https://esm.sh/lucide-react@0.476.0?external=react",
+          "xlsx": "https://esm.sh/xlsx@0.18.5",
+          "motion/react": "https://esm.sh/motion@12.23.24/react?external=react,react-dom"
+        }
+      }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+      const originalConsoleError = console.error;
+      console.error = function(...args) {
+        originalConsoleError.apply(console, args);
+        
+        // Filter out React devtools warnings if any
+        if (args[0] && typeof args[0] === 'string' && args[0].includes('Warning:')) return;
+        
+        let msg = args.map(a => (typeof a === 'object' && a !== null) ? (a.stack || a.message || JSON.stringify(a)) : a).join(' ');
+        
+        if (!document.getElementById('console-error-display')) {
+          const div = document.createElement('div');
+          div.id = 'console-error-display';
+          div.style = 'position:fixed; bottom:0; left:0; right:0; z-index:999999; background:rgba(220,38,38,0.9); color:white; padding:10px; max-height: 50vh; overflow-y:auto; font-family:monospace; font-size:12px;';
+          document.body.appendChild(div);
+        }
+        
+        const el = document.getElementById('console-error-display');
+        el.innerHTML += `<div style="border-bottom:1px solid rgba(255,255,255,0.2); padding:5px 0;">$[CONSOLE ERROR] ${msg}</div>`;
+      };
+
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.error("Intercepted by onerror:", message, error);
+        document.body.innerHTML += `
+          <div style="background-color: #0f172a; color: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: sans-serif; padding: 20px; z-index:9999; position:fixed; inset:0;">
+            <div style="background-color: #1e293b; border-top: 5px solid #ef4444; border-radius: 8px; padding: 30px; max-width: 800px; width: 100%; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);">
+              <h1 style="font-size: 1.5rem; color: #fca5a5; margin-bottom: 15px;">Fatal UI Error</h1>
+              <div style="background-color: #0f172a; padding: 15px; border-left: 4px solid #ef4444; margin-bottom: 20px;">
+                <p style="margin: 0 0 10px 0;"><strong>Error Message:</strong> <span style="color: #fca5a5;">${message}</span></p>
+                <p style="margin: 0;"><strong>Location:</strong> Line <span style="color: #60a5fa;">${lineno}</span> in ${source}</p>
+              </div>
+              <div style="background-color: #020617; color: #10b981; padding: 15px; overflow-x: auto; font-family: monospace; font-size: 0.85rem;">
+                ${error && error.stack ? error.stack.replace(/\n/g, '<br>') : 'Stack trace unavailable. Please check the browser console.'}
+              </div>
+            </div>
+          </div>
+        `;
+        return true; 
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

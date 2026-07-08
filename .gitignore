@@ -1,8 +1,63 @@
+# =======================================================================
+# BI-BEGR Culture Dashboard - Git Ignore Configuration
+# [Update 8 Juli 2026] Enterprise-Grade Exclusion List
+# =======================================================================
+
+# 1. Dependency Directories
 node_modules/
-build/
+jspm_packages/
+web_modules/
+
+# 2. Production & GAS Build Artifacts
+# (Aset hasil kompilasi yang dapat dibuat ulang secara lokal melalui npm run build)
 dist/
-coverage/
-.DS_Store
-*.log
-.env*
+dist-gas/
+build/
+out/
+Dashboard-for-Spreadsheet.html
+Dashboard-for-Spreadsheet.txt
+temp_logo_downloaded
+*.tsbuildinfo
+
+# 3. Environment Variables & Secrets (Security Guard)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Jangan abaikan berkas contoh konfigurasi lingkungan
 !.env.example
+
+# 4. Google Clasp Credentials & Local Configurations
+.clasprc.json
+.clasp.json.bak
+
+# 5. Diagnostic & System Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 6. Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 7. Editor & IDE Settings (Workspace Specific)
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp

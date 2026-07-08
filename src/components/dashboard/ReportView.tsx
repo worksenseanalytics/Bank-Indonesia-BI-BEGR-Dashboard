@@ -573,9 +573,12 @@ export function ReportView() {
         </div>
 
         {/* Chart Area */}
-        <div className="h-80 w-full mt-4 min-w-0">
+        <div key={`dimension-${selectedScope}-${selectedDimensionType}`} className="h-80 w-full mt-4 min-w-0">
           <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-            <BarChart data={filteredDimensionData} margin={{ top: 25, right: 10, left: -20, bottom: 5 }}>
+            <BarChart 
+              data={filteredDimensionData} 
+              margin={{ top: 25, right: 10, left: -20, bottom: 5 }}
+            >
               <defs>
                 <linearGradient id="evpGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#fbbf24" />

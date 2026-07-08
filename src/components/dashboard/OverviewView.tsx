@@ -513,7 +513,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
               const selectedRegion = summaryDistribution.find(r => r.name === activeTabDist) || summaryDistribution[0];
               return (
                 <div>
-                  <div className="h-44 w-full min-w-0">
+                  <div key={activeTabDist} className="h-44 w-full min-w-0">
                     <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                       <BarChart
                         data={selectedRegion.chartData}
@@ -567,7 +567,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
               <p className="text-[13px] text-slate-400 dark:text-slate-500 mt-1 font-semibold">Nilai agregat 3 Dimensi EVP dan 4 Pilar Budaya Kerja BI Wide</p>
             </div>
 
-            <div className="h-64 w-full flex-1 min-h-[240px] min-w-0">
+            <div key={isYAxisDynamic ? "dynamic" : "static"} className="h-64 w-full flex-1 min-h-[240px] min-w-0">
               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart
                   data={evpPilarChartData}
@@ -728,7 +728,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
             </li>
           </ul>
 
-          <div className="h-64 w-full relative min-w-0">
+          <div key="kp-kpw-comparison-chart" className="h-64 w-full relative min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <BarChart
                 data={kpKpwComparisonChartData}
@@ -756,7 +756,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
               <h3 className="text-base font-bold font-sans text-slate-855 dark:text-slate-100 tracking-tight">Rata-Rata Skor per Championship Program (CP)</h3>
               <p className="text-[13px] text-slate-400 dark:text-slate-500 mt-1 font-semibold">Rata-rata skor akhir BI Wide, Kantor Pusat (KP), dan Kantor Perwakilan (KPw) untuk 5 Championship Program</p>
             </div>
-            <div className="h-68 w-full min-w-0">
+            <div key="cp-averages-chart" className="h-68 w-full min-w-0">
               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart
                   data={cpChartData}

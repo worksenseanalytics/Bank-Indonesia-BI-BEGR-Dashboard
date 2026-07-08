@@ -615,7 +615,7 @@ export function SatkerDetailView() {
             </div>
           </div>
 
-          <div className="h-72 w-full min-w-0">
+          <div key="pilar-chart-wrapper" className="h-72 w-full min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <BarChart data={pilarChartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
@@ -640,7 +640,7 @@ export function SatkerDetailView() {
             </div>
           </div>
 
-          <div className="h-72 w-full min-w-0">
+          <div key="evp-chart-wrapper" className="h-72 w-full min-w-0">
             <ResponsiveContainer width="100%" height="100%" minWidth={0}>
               <BarChart data={evpChartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
@@ -783,7 +783,7 @@ export function SatkerDetailView() {
           </div>
   
           <div className="h-[400px] w-full relative overflow-y-auto scrollbar-thin pr-1 mt-3 min-w-0">
-            <div style={{ height: `${Math.max(380, cpDetailChartData.length * 35)}px`, width: "100%", minWidth: 0 }}>
+            <div key={`cp-detail-wrapper-${selectedCp}-${cpSortOrder}`} style={{ height: `${Math.max(380, cpDetailChartData.length * 35)}px`, width: "100%", minWidth: 0 }}>
               <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart
                   layout="vertical"
@@ -992,7 +992,7 @@ export function SatkerDetailView() {
               </div>
 
               {/* Chart Expanded Canvas */}
-              <div className="w-full relative min-w-0" style={{ height: `${Math.max(450, cpDetailChartData.length * 45)}px`, minWidth: 0 }}>
+              <div key={`cp-detail-fullscreen-wrapper-${selectedCp}-${cpSortOrder}`} className="w-full relative min-w-0" style={{ height: `${Math.max(450, cpDetailChartData.length * 45)}px`, minWidth: 0 }}>
                 <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                   <BarChart
                     layout="vertical"

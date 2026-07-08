@@ -666,3 +666,39 @@ export function getCmlColor(category: "Aligned" | "Engaged" | "Enable" | "Empowe
     case "Empower": return "#3b82f6";
   }
 }
+
+/**
+ * Calculates a safe Y-axis or X-axis numeric domain for charts.
+ * Guarantees a minimum span of 1.0 to prevent microscopically small divisions
+ * and duplicate tick keys/coordinates in Recharts.
+ */
+export function getSafeYDomain(dataMin: number, dataMax: number, absoluteMax = 4): [number, number] {
+  if (isNaN(dataMin) || !isFinite(dataMin)) return [0, absoluteMax];
+  if (isNaN(dataMax) || !isFinite(dataMax)) return [0, absoluteMax];
+  
+  let min = dataMin - 0.2;
+  let max = dataMax + 0.2;
+  
+  // Enforce a minimum span of 1.0
+  if (max - min < 1.0) {
+    const center = (min + max) / 2;
+    min = center - 0.5;
+    max = center + 0.5;
+  }
+  
+  // Clamp boundaries
+  min = Math.max(0, min);
+  max = Math.min(absoluteMax, max);
+  
+  // Readjust if clamping made the span less than 1.0 (near edges 0 or absoluteMax)
+  if (max - min < 1.0) {
+    if (min === 0) {
+      max = Math.min(absoluteMax, 1.0);
+    } else if (max === absoluteMax) {
+      min = Math.max(0, absoluteMax - 1.0);
+    }
+  }
+  
+  return [parseFloat(min.toFixed(2)), parseFloat(max.toFixed(2))];
+}
+

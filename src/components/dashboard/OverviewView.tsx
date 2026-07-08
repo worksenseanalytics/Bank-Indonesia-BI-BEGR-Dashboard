@@ -4,7 +4,8 @@ import {
   getPengaturanData, 
   formatScore,
   getCmlCategory,
-  getCmlColor
+  getCmlColor,
+  getSafeYDomain
 } from "../../data/dataUtils";
 import { CustomTooltip } from "../ui/custom-tooltip";
 import { 
@@ -294,6 +295,13 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
     }));
   }, [begrRecords]);
 
+  // CP Chart Safe Domain
+  const cpChartDomain = useMemo(() => {
+    if (cpChartData.length === 0) return [0, 4] as [number, number];
+    const scores = cpChartData.flatMap(d => [d["BI Wide"], d["Kantor Pusat"], d["Kantor Perwakilan"]]);
+    return getSafeYDomain(Math.min(...scores), Math.max(...scores));
+  }, [cpChartData]);
+
   // 3. Rata-rata Skor Employee Value Proposition (EVP - 3 Dimensi) & Pilar (4 Pilar)
   const evpPilarAvgData = useMemo(() => {
     if (begrRecords.length === 0) return [];
@@ -320,6 +328,13 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
       category: d.category
     }));
   }, [evpPilarAvgData, targetMaturity]);
+
+  // EVP & Pilar Chart Safe Domain
+  const evpPilarDomain = useMemo(() => {
+    if (evpPilarChartData.length === 0) return [0, 4] as [number, number];
+    const scores = evpPilarChartData.map(d => d["Skor Aktual"]);
+    return getSafeYDomain(Math.min(...scores), Math.max(...scores));
+  }, [evpPilarChartData]);
 
   // Radar Nilai NNS Core Values
   const radarNNSData = useMemo(() => {
@@ -561,7 +576,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                   <XAxis dataKey="parameter" interval={0} tickFormatter={(v) => v.replace("EVP ", "").replace("BI ", "")} tick={{ fill: "#64748b", fontSize: 10, fontWeight: "bold" }} axisLine={false} tickLine={false} />
                   <YAxis 
-                    domain={isYAxisDynamic ? [dataMin => Math.max(0, dataMin - 0.2), dataMax => Math.min(4, dataMax + 0.2)] : [0, 4]} 
+                    domain={isYAxisDynamic ? evpPilarDomain : [0, 4]} 
                     tick={{ fill: "#64748b", fontSize: 11.5 }} 
                     axisLine={false} 
                     tickLine={false} 
@@ -748,7 +763,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
                 >
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                   <XAxis dataKey="shortName" tick={{ fill: "#64748b", fontSize: 10, fontWeight: "bold" }} axisLine={false} tickLine={false} />
-                  <YAxis domain={[dataMin => Math.max(0, parseFloat((dataMin - 0.2).toFixed(2))), dataMax => Math.min(4, parseFloat((dataMax + 0.2).toFixed(2)))]} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
+                  <YAxis domain={cpChartDomain} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
                   <Tooltip content={<CustomTooltip />} />
                   <Legend iconType="circle" wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', paddingTop: '10px' }} />
                   <Bar dataKey="BI Wide" fill="#f59e0b" radius={[3, 3, 0, 0]} />

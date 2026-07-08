@@ -3,7 +3,8 @@ import {
   getBegrData, 
   formatScore, 
   getCmlCategory, 
-  getCmlColor 
+  getCmlColor,
+  getSafeYDomain 
 } from "../../data/dataUtils";
 import { CustomTooltip } from "../ui/custom-tooltip";
 import { 
@@ -254,6 +255,13 @@ export function SatkerDetailView() {
     ];
   }, [activeRecord, biWideAverages, peerAverages]);
 
+  // EVP Chart Safe Domain
+  const evpDomain = useMemo(() => {
+    if (evpChartData.length === 0) return [0, 4] as [number, number];
+    const scores = evpChartData.flatMap(d => [d["Skor Satker"], d["Rata-rata BI Wide"], d["Rata-rata Peer"]]);
+    return getSafeYDomain(Math.min(...scores), Math.max(...scores));
+  }, [evpChartData]);
+
   // 2. BI Pillars Chart Data Mapping
   const pilarChartData = useMemo(() => {
     if (!activeRecord) return [];
@@ -284,6 +292,20 @@ export function SatkerDetailView() {
       }
     ];
   }, [activeRecord, biWideAverages, peerAverages]);
+
+  // Pilar Chart Safe Domain
+  const pilarDomain = useMemo(() => {
+    if (pilarChartData.length === 0) return [0, 4] as [number, number];
+    const scores = pilarChartData.flatMap(d => [d["Skor Satker"], d["Rata-rata BI Wide"], d["Rata-rata Peer"]]);
+    return getSafeYDomain(Math.min(...scores), Math.max(...scores));
+  }, [pilarChartData]);
+
+  // CP Detail Component Safe Domain
+  const cpDetailDomain = useMemo(() => {
+    if (cpDetailChartData.length === 0) return [0, 4] as [number, number];
+    const scores = cpDetailChartData.map(d => d.score);
+    return getSafeYDomain(Math.min(...scores), Math.max(...scores));
+  }, [cpDetailChartData]);
 
   // 3. Dynamic Evaluation Program Sessi Dynamics RADAR Chart
   // Displays score dynamics across the 5 main assessment sessions
@@ -598,7 +620,7 @@ export function SatkerDetailView() {
               <BarChart data={pilarChartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                 <XAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 11.5, fontWeight: "bold" }} axisLine={false} tickLine={false} />
-                <YAxis domain={[dataMin => Math.max(0, dataMin - 0.2), dataMax => Math.min(4, dataMax + 0.2)]} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
+                <YAxis domain={pilarDomain} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "11.5px", fontWeight: "bold" }} />
                 <Bar dataKey="Rata-rata BI Wide" fill="#94a3b8" radius={[4, 4, 0, 0]} opacity={0.4} />
@@ -623,7 +645,7 @@ export function SatkerDetailView() {
               <BarChart data={evpChartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                 <XAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 11.5, fontWeight: "bold" }} axisLine={false} tickLine={false} />
-                <YAxis domain={[dataMin => Math.max(0, dataMin - 0.2), dataMax => Math.min(4, dataMax + 0.2)]} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
+                <YAxis domain={evpDomain} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: "11.5px", fontWeight: "bold" }} />
                 <Bar dataKey="Rata-rata BI Wide" fill="#94a3b8" radius={[4, 4, 0, 0]} opacity={0.4} />
@@ -769,7 +791,7 @@ export function SatkerDetailView() {
                   margin={{ top: 2, right: 10, left: 10, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
-                  <XAxis type="number" domain={[dataMin => Math.max(0, dataMin - 0.2), dataMax => Math.min(4, dataMax + 0.2)]} tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
+                  <XAxis type="number" domain={cpDetailDomain} tick={{ fill: "#64748b", fontSize: 10 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
                   <YAxis 
                     type="category" 
                     dataKey="name" 

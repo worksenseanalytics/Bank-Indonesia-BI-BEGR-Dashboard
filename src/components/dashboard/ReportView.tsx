@@ -5,7 +5,8 @@ import {
   formatScore,
   getCmlCategory,
   getCmlColor,
-  BegrRecord
+  BegrRecord,
+  getSafeYDomain
 } from "../../data/dataUtils";
 import { 
   Award, 
@@ -170,6 +171,13 @@ export function ReportView() {
     if (selectedDimensionType === "Semua") return dimensionData;
     return dimensionData.filter(d => d.type === selectedDimensionType);
   }, [dimensionData, selectedDimensionType]);
+
+  // Dimension Chart Safe Domain
+  const dimensionDomain = useMemo(() => {
+    if (filteredDimensionData.length === 0) return [0, 4] as [number, number];
+    const scores = filteredDimensionData.map(d => d.score);
+    return getSafeYDomain(Math.min(...scores), Math.max(...scores));
+  }, [filteredDimensionData]);
 
   // Dimension Performance Insights
   const dimensionInsights = useMemo(() => {
@@ -590,7 +598,7 @@ export function ReportView() {
               <YAxis 
                 axisLine={false} 
                 tickLine={false} 
-                domain={[dataMin => Math.max(0, parseFloat((dataMin - 0.2).toFixed(2))), dataMax => Math.min(4, parseFloat((dataMax + 0.2).toFixed(2)))]}
+                domain={dimensionDomain}
                 tick={{ fill: "#64748b", fontSize: 9, fontWeight: "bold" }}
                 tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v}
               />

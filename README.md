@@ -18,7 +18,19 @@ Dengan memanfaatkan **Google Sheets** sebagai pangkalan data utama (*single sour
 
 ---
 
-## 2. Alur Arsitektur & Aliran Data
+## 2. Tampilan Dasbor
+
+Berikut adalah visualisasi antarmuka dari **BI-BEGR Culture Dashboard**:
+
+### Ringkasan Utama (Overview Dashboard)
+![Overview Dashboard](docs/screenshots/overview.png)
+
+### Laporan KPI Konsolidasi (Executive Report)
+![Executive Report](docs/screenshots/report.png)
+
+---
+
+## 3. Alur Arsitektur & Aliran Data
 
 Aplikasi ini menggunakan pipa kompilasi (*compilation pipeline*) teroptimasi yang membundel aplikasi React SPA (*Single Page Application*) menjadi berkas HTML tunggal (*self-contained inline assets*) agar dapat dijalankan di dalam container `HtmlService` Google Apps Script.
 
@@ -73,7 +85,7 @@ flowchart TD
 
 ---
 
-## 3. Struktur Direktori Proyek
+## 4. Struktur Direktori Proyek
 
 Penyusunan berkas mengikuti prinsip modularitas arsitektur React yang dikombinasikan dengan struktur proyek Google Apps Script Clasp:
 
@@ -118,7 +130,7 @@ flowchart TD
 
 ---
 
-## 4. Fitur Utama Dasbor
+## 5. Fitur Utama Dasbor
 
 1. **Overview Dashboard (Swiss-Style Minimalism)**: 
    Menyajikan agregasi metrik makro tingkat nasional, diagram radar untuk 5 dimensi Nilai-Nilai Strategis (NNS), grafik batang capaian EVP & Pilar Budaya dengan garis batas target kelulusan acuan, serta status kematangan satker *Top 3* dan *Bottom 3*.
@@ -133,7 +145,7 @@ flowchart TD
 
 ---
 
-## 5. Panduan Pengembangan Lokal
+## 6. Panduan Pengembangan Lokal
 
 ### Prasyarat System
 * **Node.js** (Versi v18 ke atas disarankan)
@@ -160,7 +172,7 @@ Aplikasi lokal akan berjalan pada alamat: `http://localhost:3000`.
 
 ---
 
-## 6. Prosedur Kompilasi & Deployment ke Google Sheets
+## 7. Prosedur Kompilasi & Deployment ke Google Sheets
 
 Dasbor dikompilasi menggunakan skrip build khusus yang mereduksi seluruh berkas aset (HTML, JS, CSS, Ikon) ke dalam satu file mandiri agar kompatibel dengan lingkungan sandbox Google Apps Script.
 
@@ -182,7 +194,7 @@ npx clasp push
 
 ---
 
-## 7. Informasi Berkas Utama Proyek
+## 8. Informasi Berkas Utama Proyek
 
 * **[package.json](file:///c:/Users/IKHSAN%20KAMAL/Downloads/PROJECT%20-%20APPSCRIPT/bi---wide/package.json)**: Menyimpan definisi skrip eksekusi dan dependensi modul.
 * **[src/App.tsx](file:///c:/Users/IKHSAN%20KAMAL/Downloads/PROJECT%20-%20APPSCRIPT/bi---wide/src/App.tsx)**: Mengontrol render utama tab aktif dasbor dan penanganan event sinkronisasi data global.
@@ -193,7 +205,7 @@ npx clasp push
 
 ---
 
-## 8. Tim Pengembang & Kolaborasi
+## 9. Tim Pengembang & Kolaborasi
 
 Aplikasi ini dikembangkan melalui kemitraan kolaboratif antara pihak-pihak berikut:
 * **Ikhsan Kamal** (Owner & Lead Architect) &nbsp; [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Ikhsan%20Kamal) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/iamikhsank)

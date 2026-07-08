@@ -522,7 +522,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
                       >
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                         <XAxis dataKey="Level Kematangan" tick={{ fill: "#64748b", fontSize: 10, fontWeight: "bold" }} axisLine={false} tickLine={false} />
-                        <YAxis key="cml-dist-y-axis" allowDecimals={false} tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
+                        <YAxis key="cml-dist-y-axis" domain={[0, (dataMax: number) => Math.max(dataMax, 4)]} allowDecimals={false} tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
                         <Tooltip content={<CustomTooltip />} />
                         <Bar dataKey="Jumlah Satker" radius={[4, 4, 0, 0]}>
                           {selectedRegion.details.map((entry, idx) => (
@@ -739,7 +739,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
               >
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                 <XAxis dataKey="name" tick={{ fill: "#64748b", fontSize: 11, fontWeight: "bold" }} axisLine={false} tickLine={false} />
-                <YAxis key="kp-kpw-y-axis" allowDecimals={false} tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis key="kp-kpw-y-axis" domain={[0, (dataMax: number) => Math.max(dataMax, 4)]} allowDecimals={false} tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="Kantor Pusat" fill="#3b82f6" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="Kantor Perwakilan" fill="#06b6d4" radius={[4, 4, 0, 0]} />

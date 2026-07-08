@@ -5,7 +5,7 @@
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/) &nbsp; [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/) &nbsp; [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/) &nbsp; [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/) &nbsp; [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/) &nbsp; [![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://motion.dev/)
 
 ### Ecosystem & Integrations
-[![Google Apps Script](https://img.shields.io/badge/Google%20Apps%20Script-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/apps-script) &nbsp; [![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)](https://www.google.com/sheets/about/) &nbsp; [![Google Clasp](https://img.shields.io/badge/Google_Clasp-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://github.com/google/clasp) &nbsp; [![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=for-the-badge)](https://recharts.org/) &nbsp; [![SheetJS (XLSX)](https://img.shields.io/badge/SheetJS-4CAF50?style=for-the-badge&logo=microsoft-excel&logoColor=white)](https://sheetjs.com/) &nbsp; [![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/) &nbsp; [![esbuild](https://img.shields.io/badge/esbuild-FFCF00?style=for-the-badge&logo=esbuild&logoColor=black)](https://esbuild.github.io/) &nbsp; [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![Google Apps Script](https://img.shields.io/badge/Google%20Apps%20Script-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://developers.google.com/apps-script) &nbsp; [![Google Sheets](https://img.shields.io/badge/Google%20Sheets-34A853?style=for-the-badge&logo=googlesheets&logoColor=white)](https://www.google.com/sheets/about/) &nbsp; [![Google Clasp](https://img.shields.io/badge/Google_Clasp-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://github.com/google/clasp) &nbsp; [![Recharts](https://img.shields.io/badge/Recharts-22B5BF?style=for-the-badge)](https://recharts.org/) &nbsp; [![SheetJS (XLSX)](https://img.shields.io/badge/SheetJS-4CAF50?style=for-the-badge&logo=microsoft-excel&logoColor=white)](https://sheetjs.com/) &nbsp; [![Express](https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/) &nbsp; [![esbuild](https://img.shields.io/badge/esbuild-FFCF00?style=for-the-badge&logo=esbuild&logoColor=black)](https://esbuild.github.io/) &nbsp; [![Google Gemini AI](https://img.shields.io/badge/Google%20Gemini%20AI-8E75B2?style=for-the-badge&logo=googlebard&logoColor=white)](https://ai.google.dev/) &nbsp; [![Lucide Icons](https://img.shields.io/badge/Lucide%20Icons-F28D1A?style=for-the-badge&logo=lucide&logoColor=white)](https://lucide.dev/) &nbsp; [![date--fns](https://img.shields.io/badge/date--fns-770C56?style=for-the-badge&logo=npm&logoColor=white)](https://date-fns.org/) &nbsp; [![Dotenv](https://img.shields.io/badge/Dotenv-ECD53F?style=for-the-badge&logo=dotenv&logoColor=black)](https://github.com/motdotla/dotenv) &nbsp; [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 
 
@@ -27,7 +27,15 @@ Berikut adalah visualisasi antarmuka dari **BI-BEGR Culture Dashboard**:
 ![Overview Dashboard](docs/screenshots/overview.png)
 
 ### Laporan KPI Konsolidasi (Executive Report)
-![Executive Report](docs/screenshots/report.png)
+![Executive Report](docs/screenshots/konsolidasi.png)
+
+> **💡 Panduan Memperbarui Tangkapan Layar (Screenshots):**
+> Jika Anda ingin memperbarui atau menambahkan gambar tangkapan layar baru, ikuti langkah berikut:
+> 1. Buka aplikasi yang sudah berjalan (`http://localhost:3000` atau *deployment* Apps Script).
+> 2. Ambil *screenshot* menggunakan *snipping tool* atau ekstensi penangkap layar pada peramban.
+> 3. Simpan berkas gambar dengan format `.png` atau `.jpg`.
+> 4. Pindahkan gambar tersebut ke dalam map/direktori `docs/screenshots/` di dalam folder proyek ini (timpa *replace* gambar lama jika perlu).
+> 5. Referensikan gambar tersebut di dokumen ini dengan sintaks Markdown: `![Nama Alternatif](docs/screenshots/nama_file.png)`.
 
 ---
 
@@ -212,3 +220,10 @@ Aplikasi ini dikembangkan melalui kemitraan kolaboratif antara pihak-pihak berik
 * **Ikhsan Kamal** (Owner & Lead Architect) &nbsp; [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Ikhsan%20Kamal) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/iamikhsank)
 * **Worksense Analytics** (Mitra Kolaborasi) &nbsp; [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/search/results/all/?keywords=Worksense%20Analytics) &nbsp; [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/worksense.analytics)
 
+---
+
+## 10. Lisensi
+
+Hak cipta (c) 2024 Ikhsan Kamal / Worksense Analytics.
+Proyek ini didistribusikan di bawah **MIT License**.
+Lihat berkas [LICENSE](LICENSE) untuk informasi lebih lanjut mengenai hak penggunaan, penyalinan, dan modifikasi perangkat lunak.

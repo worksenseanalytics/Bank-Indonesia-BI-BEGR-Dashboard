@@ -521,7 +521,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
                       >
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                         <XAxis dataKey="Level Kematangan" tick={{ fill: "#64748b", fontSize: 10, fontWeight: "bold" }} axisLine={false} tickLine={false} />
-                        <YAxis tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
+                        <YAxis key="cml-dist-y-axis" allowDecimals={false} tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
                         <Tooltip content={<CustomTooltip />} />
                         <Bar dataKey="Jumlah Satker" radius={[4, 4, 0, 0]}>
                           {selectedRegion.details.map((entry, idx) => (
@@ -576,6 +576,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                   <XAxis dataKey="parameter" interval={0} tickFormatter={(v) => v.replace("EVP ", "").replace("BI ", "")} tick={{ fill: "#64748b", fontSize: 10, fontWeight: "bold" }} axisLine={false} tickLine={false} />
                   <YAxis 
+                    key={isYAxisDynamic ? "dynamic-y-axis" : "static-y-axis"}
                     domain={isYAxisDynamic ? evpPilarDomain : [0, 4]} 
                     tick={{ fill: "#64748b", fontSize: 11.5 }} 
                     axisLine={false} 
@@ -735,7 +736,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
               >
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                 <XAxis dataKey="name" tick={{ fill: "#64748b", fontSize: 11, fontWeight: "bold" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
+                <YAxis key="kp-kpw-y-axis" allowDecimals={false} tick={{ fill: "#64748b", fontSize: 11 }} axisLine={false} tickLine={false} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="Kantor Pusat" fill="#3b82f6" radius={[4, 4, 0, 0]} />
                 <Bar dataKey="Kantor Perwakilan" fill="#06b6d4" radius={[4, 4, 0, 0]} />
@@ -763,7 +764,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
                 >
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" className="dark:stroke-slate-800/40" />
                   <XAxis dataKey="shortName" tick={{ fill: "#64748b", fontSize: 10, fontWeight: "bold" }} axisLine={false} tickLine={false} />
-                  <YAxis domain={cpChartDomain} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
+                  <YAxis key="cp-y-axis" domain={cpChartDomain} tick={{ fill: "#64748b", fontSize: 11.5 }} axisLine={false} tickLine={false} tickFormatter={(v) => typeof v === "number" ? parseFloat(v.toFixed(2)).toString() : v} />
                   <Tooltip content={<CustomTooltip />} />
                   <Legend iconType="circle" wrapperStyle={{ fontSize: '10px', fontWeight: 'bold', paddingTop: '10px' }} />
                   <Bar dataKey="BI Wide" fill="#f59e0b" radius={[3, 3, 0, 0]} />

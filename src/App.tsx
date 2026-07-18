@@ -3,6 +3,7 @@ import { Layout } from './components/layout/Layout';
 import { OverviewView } from './components/dashboard/OverviewView';
 import { RankingView } from './components/dashboard/RankingView';
 import { SatkerDetailView } from './components/dashboard/SatkerDetailView';
+import { SatkerReportView } from './components/dashboard/SatkerReportView';
 import { ReportView } from './components/dashboard/ReportView';
 import { BeforeTripView } from './components/dashboard/BeforeTripView'; // Used as Data Master view
 import { SettingsView } from './components/dashboard/SettingsView';
@@ -35,6 +36,7 @@ export default function App() {
           {activeTab === "overview" && <OverviewView setActiveTab={setActiveTab} />}
           {activeTab === "ranking" && <RankingView />}
           {activeTab === "satker-detail" && <SatkerDetailView />}
+          {activeTab === "satker-report" && <SatkerReportView />}
           {activeTab === "report" && <ReportView />}
           {activeTab === "data-begr" && <BeforeTripView />}
           {activeTab === "settings" && <SettingsView />}

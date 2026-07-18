@@ -61,6 +61,7 @@ const NAV_GROUPS: NavGroup[] = [
       { id: "overview", label: "OVERVIEW BI WIDE", icon: LayoutDashboard },
       { id: "ranking", label: "DASHBOARD RANKING", icon: TrendingUp },
       { id: "satker-detail", label: "DASHBOARD PER-SATKER", icon: Building2 },
+      { id: "satker-report", label: "LAPORAN PER-SATKER", icon: FileSpreadsheet },
       { id: "report", label: "LAPORAN KPI KONSOLIDASI", icon: FileText },
     ]
   },
@@ -99,6 +100,11 @@ const getPageHeaderInfo = (tabId: string, defaultAdmin: string): PageHeaderInfo 
       return {
         title: "Dashboard Per-Satker",
         subtitle: "Ulasan Profil Kematangan Budaya Kerja 360-Derajat Satuan Kerja Terpilih"
+      };
+    case "satker-report":
+      return {
+        title: "Laporan Per-Satker",
+        subtitle: "Lembar Cetak Laporan Evaluasi Kematangan Budaya Kerja per Satuan Kerja"
       };
     case "report":
       return {
@@ -160,6 +166,55 @@ export function Layout({ children, activeTab, setActiveTab }: LayoutProps) {
   );
   const [isSyncing, setIsSyncing] = useState<boolean>((window as any).isSyncing || false);
   const [exportDropdownOpen, setExportDropdownOpen] = useState(false);
+  
+  // States and logic for Satker Report Selector (top bar)
+  const [selectedSatkerNo, setSelectedSatkerNo] = useState<number>(() => {
+    return (window as any).selectedSatkerNo || (begrRecords.length > 0 ? begrRecords[0].no : 1);
+  });
+  const [isSatkerDropdownOpen, setIsSatkerDropdownOpen] = useState(false);
+  const [satkerSearchQuery, setSatkerSearchQuery] = useState("");
+
+  const handleSatkerChange = (no: number) => {
+    setSelectedSatkerNo(no);
+    (window as any).selectedSatkerNo = no;
+    window.dispatchEvent(new CustomEvent('satker-changed', { detail: { no } }));
+  };
+
+  const groupedRecordsByKelompok = useMemo(() => {
+    const groups: Record<string, typeof begrRecords> = {};
+    begrRecords.forEach(rec => {
+      const groupName = rec.kelompokBudker || "Lainnya";
+      if (!groups[groupName]) {
+        groups[groupName] = [];
+      }
+      groups[groupName].push(rec);
+    });
+    return groups;
+  }, [begrRecords]);
+
+  const filteredGroupedRecords = useMemo(() => {
+    if (!satkerSearchQuery.trim()) return groupedRecordsByKelompok;
+    const query = satkerSearchQuery.toLowerCase();
+    const filtered: Record<string, typeof begrRecords> = {};
+    
+    Object.keys(groupedRecordsByKelompok).forEach((groupName) => {
+      const records = groupedRecordsByKelompok[groupName];
+      const matched = records.filter(rec => 
+        rec.satkerLengkap.toLowerCase().includes(query) ||
+        rec.rubrik.toLowerCase().includes(query) ||
+        (rec.kelompokBudker && rec.kelompokBudker.toLowerCase().includes(query)) ||
+        (rec.jenis && rec.jenis.toLowerCase().includes(query))
+      );
+      if (matched.length > 0) {
+        filtered[groupName] = matched;
+      }
+    });
+    return filtered;
+  }, [groupedRecordsByKelompok, satkerSearchQuery]);
+
+  const activeSatkerRecord = useMemo(() => {
+    return begrRecords.find(r => r.no === selectedSatkerNo) || begrRecords[0];
+  }, [begrRecords, selectedSatkerNo]);
   
   const [notifications, setNotifications] = useState<TravelNotification[]>(() => {
     const saved = localStorage.getItem('begr_culture_notifications_v1');
@@ -272,6 +327,7 @@ export function Layout({ children, activeTab, setActiveTab }: LayoutProps) {
       case "overview": return "Dashboard Overview";
       case "ranking": return "Dashboard Ranking";
       case "satker-detail": return "Dashboard Deep Dive Satker";
+      case "satker-report": return "Laporan Budaya Kerja Satker";
       case "report": return "Laporan Eksekutif KPI Konsolidasi";
       case "data-begr": return "Dashboard Master Data BEGR";
       case "settings": return "Dashboard Konfigurasi Sistem";
@@ -437,18 +493,95 @@ export function Layout({ children, activeTab, setActiveTab }: LayoutProps) {
               </div>
             </div>
 
-            {/* Desktop Center Quick Search */}
-            <div className="hidden lg:flex flex-1 max-w-[150px] lg:max-w-[200px] xl:max-w-xs 2xl:max-w-sm mx-4 transition-all duration-300 min-w-0">
-              <button 
-                onClick={() => setSearchOpen(true)}
-                className="w-full flex items-center justify-between bg-white/5 lg:bg-slate-50 lg:dark:bg-slate-800/40 hover:bg-white/10 lg:hover:bg-slate-100/80 lg:dark:hover:bg-slate-800/80 transition-all duration-200 border border-white/5 lg:border-slate-200 lg:dark:border-slate-800/50 rounded-xl px-3.5 py-1.5 text-left cursor-pointer"
-              >
-                <div className="flex items-center overflow-hidden">
-                  <Search className="w-4 h-4 mr-2.5 text-slate-400 shrink-0" />
-                  <span className="text-slate-400 text-xs truncate">Cari satker, rubrik, kelompok...</span>
+            {/* Center Area: Quick Search or Satker Report Selector */}
+            <div className={cn(
+              "flex-1 mx-2 sm:mx-4 transition-all duration-300 min-w-0 relative z-45",
+              activeTab === "satker-report" 
+                ? "flex max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md xl:max-w-lg"
+                : "hidden lg:flex max-w-[150px] lg:max-w-[200px] xl:max-w-xs 2xl:max-w-sm"
+            )}>
+              {activeTab === "satker-report" ? (
+                <div className="relative w-full">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsSatkerDropdownOpen(!isSatkerDropdownOpen);
+                      setSatkerSearchQuery("");
+                    }}
+                    className="w-full bg-slate-105 hover:bg-slate-150 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-xl pl-3.5 pr-9 py-2 text-left text-xs font-bold text-slate-800 dark:text-slate-205 outline-none cursor-pointer transition-all flex items-center justify-between min-h-[38px] shadow-xs"
+                  >
+                    <span className="block truncate font-black text-[11px] sm:text-xs">
+                      {activeSatkerRecord?.satkerLengkap || "Pilih Satker..."}
+                    </span>
+                    <ChevronDown className={cn("w-4 h-4 text-slate-450 shrink-0 transition-transform duration-200", isSatkerDropdownOpen ? "rotate-180" : "")} />
+                  </button>
+
+                  {isSatkerDropdownOpen && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setIsSatkerDropdownOpen(false)}></div>
+                      <div className="absolute right-0 left-0 mt-1.5 bg-white dark:bg-slate-900 border border-slate-250 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden flex flex-col z-50 animate-in fade-in duration-150 max-h-[250px]">
+                        <div className="p-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 flex items-center gap-2">
+                          <Search className="w-3.5 h-3.5 text-slate-450 shrink-0 ml-1" />
+                          <input
+                            type="text"
+                            placeholder="Cari Satuan Kerja..."
+                            value={satkerSearchQuery}
+                            onChange={(e) => setSatkerSearchQuery(e.target.value)}
+                            className="w-full bg-transparent border-none outline-none text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 py-1"
+                            autoFocus
+                          />
+                        </div>
+
+                        <div className="overflow-y-auto divide-y divide-slate-100 dark:divide-slate-800 max-h-[180px] scrollbar-thin">
+                          {Object.keys(filteredGroupedRecords).length > 0 ? (
+                            Object.keys(filteredGroupedRecords).map((groupName) => (
+                              <div key={groupName} className="flex flex-col">
+                                <div className="bg-slate-50/80 dark:bg-slate-950/40 px-3 py-1.5 text-[8.5px] font-black text-slate-500 dark:text-slate-400 tracking-wider uppercase">
+                                  Grup: {groupName}
+                                </div>
+                                <div className="divide-y divide-slate-50 dark:divide-slate-900">
+                                  {filteredGroupedRecords[groupName].map((rec) => (
+                                    <button
+                                      key={rec.no}
+                                      type="button"
+                                      onClick={() => {
+                                        handleSatkerChange(rec.no);
+                                        setIsSatkerDropdownOpen(false);
+                                      }}
+                                      className={cn(
+                                        "w-full text-left px-3.5 py-2.5 text-xs transition-colors cursor-pointer flex flex-col gap-0.5",
+                                        rec.no === selectedSatkerNo 
+                                          ? "bg-blue-50/70 dark:bg-blue-950/30 text-blue-600 dark:text-blue-400 font-bold border-l-2 border-blue-500" 
+                                          : "hover:bg-slate-50 dark:hover:bg-slate-800/60 text-slate-650 dark:text-slate-300 border-l-2 border-transparent"
+                                      )}
+                                    >
+                                      <span className="font-extrabold block truncate text-xs">{rec.satkerLengkap}</span>
+                                      <span className="block text-[9.5px] text-slate-400 font-medium">Rubrik: {rec.rubrik} • {rec.jenis}</span>
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="p-4 text-center text-xs text-slate-455 italic">Tidak ada satker</div>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
-                <kbd className="hidden lg:inline-block text-[9px] bg-white/10 lg:bg-slate-200 lg:dark:bg-slate-700 px-1.5 py-0.5 rounded text-slate-350 dark:text-slate-400 font-mono shrink-0">⌘K</kbd>
-              </button>
+              ) : (
+                <button 
+                  onClick={() => setSearchOpen(true)}
+                  className="w-full flex items-center justify-between bg-white/5 lg:bg-slate-50 lg:dark:bg-slate-800/40 hover:bg-white/10 lg:hover:bg-slate-100/80 lg:dark:hover:bg-slate-800/80 transition-all duration-200 border border-white/5 lg:border-slate-200 lg:dark:border-slate-800/50 rounded-xl px-3.5 py-1.5 text-left cursor-pointer"
+                >
+                  <div className="flex items-center overflow-hidden">
+                    <Search className="w-4 h-4 mr-2.5 text-slate-400 shrink-0" />
+                    <span className="text-slate-400 text-xs truncate">Cari satker, rubrik, kelompok...</span>
+                  </div>
+                  <kbd className="hidden lg:inline-block text-[9px] bg-white/10 lg:bg-slate-200 lg:dark:bg-slate-700 px-1.5 py-0.5 rounded text-slate-350 dark:text-slate-400 font-mono shrink-0">⌘K</kbd>
+                </button>
+              )}
             </div>
 
             {/* Right: Actions */}
@@ -480,7 +613,15 @@ export function Layout({ children, activeTab, setActiveTab }: LayoutProps) {
 
               {/* Print Report Button */}
               <button
-                onClick={() => captureAndPrint("main-content", getPdfFileName())}
+                onClick={() => {
+                  if (activeTab === "satker-report") {
+                    const activeRecord = begrRecords.find(r => r.no === selectedSatkerNo) || begrRecords[0];
+                    const filename = `Laporan_BE-GR_${activeRecord.satkerLengkap.replace(/\s+/g, "_")}`;
+                    captureAndPrint("satker-report-card", filename);
+                  } else {
+                    captureAndPrint("main-content", getPdfFileName());
+                  }
+                }}
                 className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-[#1b303d] lg:bg-slate-50 lg:dark:bg-slate-850 hover:bg-white/10 lg:hover:bg-slate-100 lg:dark:hover:bg-slate-800 text-[#b4ccd8] lg:text-slate-600 lg:dark:text-slate-350 hover:text-white lg:hover:text-slate-800 lg:dark:hover:text-white transition-all cursor-pointer border border-white/5 lg:border-slate-200 lg:dark:border-slate-800 rounded-xl font-bold text-[11px] shadow-sm whitespace-nowrap"
                 title="Cetak laporan halaman aktif dalam mode landscape"
               >

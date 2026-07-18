@@ -825,7 +825,7 @@ export function SatkerDetailView() {
               <RadarChart id="satker-cp-radar-chart" cx="50%" cy="50%" outerRadius="75%" data={programDynamicsData}>
                 <PolarGrid stroke="#e2e8f0" className="dark:stroke-slate-800/25" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 10, fontWeight: "800" }} />
-                <PolarRadiusAxis angle={30} domain={[0, 4]} tick={{ fill: "#94a3b8", fontSize: 9, fontWeight: "600" }} axisLine={false} tickLine={false} />
+                <PolarRadiusAxis angle={30} domain={[0, 4]} tick={false} axisLine={false} tickLine={false} />
                 <Radar name="Skor Akhir CP" dataKey="Skor" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.12} strokeWidth={2.5} />
                 <Tooltip content={<CustomTooltip />} />
               </RadarChart>

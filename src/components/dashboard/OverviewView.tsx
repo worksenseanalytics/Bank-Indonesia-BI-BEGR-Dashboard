@@ -674,7 +674,7 @@ export function OverviewView({ setActiveTab }: OverviewViewProps) {
               <RadarChart id="nns-radar-chart" cx="50%" cy="50%" outerRadius="80%" data={radarNNSData}>
                 <PolarGrid stroke="#e2e8f0" className="dark:stroke-slate-800/25" />
                 <PolarAngleAxis dataKey="subject" tick={{ fill: "#64748b", fontSize: 11, fontWeight: "800" }} />
-                <PolarRadiusAxis angle={30} domain={[0, 4]} tick={{ fill: "#94a3b8", fontSize: 9.5, fontWeight: "600" }} axisLine={false} tickLine={false} />
+                <PolarRadiusAxis angle={30} domain={[0, 4]} tick={false} axisLine={false} tickLine={false} />
                 <Radar name="Nilai Rata-rata" dataKey="Skor" stroke="#f59e0b" fill="#f59e0b" fillOpacity={0.12} strokeWidth={2} />
                 <Tooltip content={<CustomTooltip />} />
               </RadarChart>

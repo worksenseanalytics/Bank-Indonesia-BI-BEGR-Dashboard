@@ -609,12 +609,22 @@ export function RankingView() {
                     rankColor = "";
                   }
 
-                  // Progress bar color based on score context & premium gradients (McKinsey-standard)
-                  let barColor = "bg-gradient-to-r from-amber-500 to-yellow-400 dark:from-amber-600/90 dark:to-yellow-500/90";
-                  if (rec.isTop5) {
-                    barColor = "bg-gradient-to-r from-emerald-500 to-teal-400 dark:from-emerald-600/90 dark:to-teal-500/90";
-                  } else if (rec.isBottom5) {
-                    barColor = "bg-gradient-to-r from-rose-500 to-orange-400 dark:from-rose-600/90 dark:to-orange-500/95";
+                  // Progress bar color based on CML Category (existing color rules)
+                  let barColor = "";
+                  const activeScoreCat = getCmlCategory(rec.activeScore);
+                  switch (activeScoreCat) {
+                    case "Aligned":
+                      barColor = "bg-gradient-to-r from-rose-500 to-rose-450 dark:from-rose-600/90 dark:to-rose-500/90";
+                      break;
+                    case "Engaged":
+                      barColor = "bg-gradient-to-r from-amber-500 to-yellow-400 dark:from-amber-600/90 dark:to-yellow-500/90";
+                      break;
+                    case "Enable":
+                      barColor = "bg-gradient-to-r from-emerald-500 to-teal-400 dark:from-emerald-600/90 dark:to-teal-500/90";
+                      break;
+                    case "Empower":
+                      barColor = "bg-gradient-to-r from-blue-500 to-sky-400 dark:from-blue-600/90 dark:to-sky-500/90";
+                      break;
                   }
 
                   return (

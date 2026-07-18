@@ -90,6 +90,17 @@ const BAKE_PROPERTIES: string[] = [
   "border-left-color",
   "outline-color",
   "text-decoration-color",
+  "font-family",
+  "font-weight",
+  "font-size",
+  "line-height",
+  "text-transform",
+  "letter-spacing",
+  "text-align",
+  "padding-top",
+  "padding-right",
+  "padding-bottom",
+  "padding-left"
 ];
 
 const BAKE_PROPERTIES_CAMEL: string[] = [
@@ -102,12 +113,24 @@ const BAKE_PROPERTIES_CAMEL: string[] = [
   "borderLeftColor",
   "outlineColor",
   "textDecorationColor",
+  "fontFamily",
+  "fontWeight",
+  "fontSize",
+  "lineHeight",
+  "textTransform",
+  "letterSpacing",
+  "textAlign",
+  "paddingTop",
+  "paddingRight",
+  "paddingBottom",
+  "paddingLeft"
 ];
 
 /**
- * Walks the live element tree, reads getComputedStyle for every colour
- * property, resolves oklch→rgb via canvas, and writes each value as an
- * inline style on the corresponding cloned element.
+ * Walks the live element tree, reads getComputedStyle for colors, typography,
+ * and padding, and bakes them as inline styles on the cloned element.
+ * This guarantees that html2canvas will render exactly what is seen in the browser,
+ * avoiding font loading fallback shifts or vertical padding miscalculations.
  */
 function bakeComputedColors(
   originalRoot: HTMLElement,
@@ -126,19 +149,28 @@ function bakeComputedColors(
       const cs = window.getComputedStyle(origEl);
 
       for (let p = 0; p < BAKE_PROPERTIES.length; p++) {
-        const value = cs.getPropertyValue(BAKE_PROPERTIES[p]);
-        if (!value || value === "transparent" || value === "rgba(0, 0, 0, 0)") continue;
+        const propName = BAKE_PROPERTIES[p];
+        const camelName = BAKE_PROPERTIES_CAMEL[p];
+        const value = cs.getPropertyValue(propName);
+        if (!value) continue;
 
-        // Check if value contains unsupported colour functions
-        const hasModern = MODERN_COLOR_KEYWORDS.some(kw => value.includes(kw.replace("(", "")));
+        // Skip transparent color/bg values to allow inheritance
+        if (
+          (propName.includes("color") || propName.includes("background")) &&
+          (value === "transparent" || value === "rgba(0, 0, 0, 0)")
+        ) {
+          continue;
+        }
+
+        // Only resolve colour variables if they are colour properties (e.g. oklch support)
+        const isColorProp = propName.includes("color") || propName.includes("background");
+        const hasModern = isColorProp && MODERN_COLOR_KEYWORDS.some(kw => value.includes(kw.replace("(", "")));
         const finalValue = hasModern ? resolveColorToRgb(value) : value;
 
-        if (finalValue && finalValue !== "transparent") {
-          (cloneEl.style as any)[BAKE_PROPERTIES_CAMEL[p]] = finalValue;
-        }
+        (cloneEl.style as any)[camelName] = finalValue;
       }
     } catch (_) {
-      // Skip elements that throw (e.g. SVG foreignObject children)
+      // Skip elements that throw
     }
   }
 
@@ -146,13 +178,23 @@ function bakeComputedColors(
   try {
     const rootCs = window.getComputedStyle(originalRoot);
     for (let p = 0; p < BAKE_PROPERTIES.length; p++) {
-      const value = rootCs.getPropertyValue(BAKE_PROPERTIES[p]);
-      if (!value || value === "transparent" || value === "rgba(0, 0, 0, 0)") continue;
-      const hasModern = MODERN_COLOR_KEYWORDS.some(kw => value.includes(kw.replace("(", "")));
-      const finalValue = hasModern ? resolveColorToRgb(value) : value;
-      if (finalValue && finalValue !== "transparent") {
-        (clonedRoot.style as any)[BAKE_PROPERTIES_CAMEL[p]] = finalValue;
+      const propName = BAKE_PROPERTIES[p];
+      const camelName = BAKE_PROPERTIES_CAMEL[p];
+      const value = rootCs.getPropertyValue(propName);
+      if (!value) continue;
+
+      if (
+        (propName.includes("color") || propName.includes("background")) &&
+        (value === "transparent" || value === "rgba(0, 0, 0, 0)")
+      ) {
+        continue;
       }
+
+      const isColorProp = propName.includes("color") || propName.includes("background");
+      const hasModern = isColorProp && MODERN_COLOR_KEYWORDS.some(kw => value.includes(kw.replace("(", "")));
+      const finalValue = hasModern ? resolveColorToRgb(value) : value;
+
+      (clonedRoot.style as any)[camelName] = finalValue;
     }
   } catch (_) {
     // Ignore
@@ -169,7 +211,7 @@ function bakeComputedColors(
  * 3. Computed style baking to guarantee inline rgb on every element.
  * 4. Per-page canvas slicing for clean page transitions.
  */
-export async function captureAndPrint(elementId: string, fileName = "Dashboard"): Promise<void> {
+export async function captureAndPrint(elementId: string, fileName = "Dashboard", forceSinglePage = false): Promise<void> {
   const element = document.getElementById(elementId);
   if (!element) {
     console.error("Print target element not found:", elementId);
@@ -239,7 +281,9 @@ export async function captureAndPrint(elementId: string, fileName = "Dashboard")
 
     const backgroundColor = "#f8fafc";
 
-    // Release scroll constraints
+    const isSatkerReport = elementId === "satker-report-card";
+
+    // Release scroll constraints so html2canvas sees the FULL content
     const originalOverflow = element.style.overflow;
     const originalHeight = element.style.height;
     const originalMaxHeight = element.style.maxHeight;
@@ -248,17 +292,23 @@ export async function captureAndPrint(elementId: string, fileName = "Dashboard")
     element.style.height = "auto";
     element.style.maxHeight = "none";
 
+    // Measure AFTER releasing constraints so we get the true content size
+    const wWidth = isSatkerReport ? 1180 : (element.scrollWidth || window.innerWidth);
+    const wHeight = isSatkerReport ? 664 : (element.scrollHeight || window.innerHeight);
+
     // ── Capture DOM to Canvas ─────────────────────────────────────────
     const canvas: HTMLCanvasElement = await html2canvas(element, {
-      scale: 2.5,
+      scale: 2,
       useCORS: true,
       allowTaint: true,
       backgroundColor,
       logging: false,
       scrollY: 0,
       scrollX: 0,
-      windowWidth: element.scrollWidth || window.innerWidth,
-      windowHeight: element.scrollHeight || window.innerHeight,
+      windowWidth: wWidth,
+      windowHeight: wHeight,
+      width: isSatkerReport ? 1180 : undefined,
+      height: isSatkerReport ? 664 : undefined,
       onclone: (clonedDocument: Document) => {
         // ─── Step 1: Force Light Mode ─────────────────────────────
         const clonedHtml = clonedDocument.documentElement;
@@ -280,6 +330,15 @@ export async function captureAndPrint(elementId: string, fileName = "Dashboard")
           clonedTarget.classList.add("light");
           clonedTarget.style.backgroundColor = "#f8fafc";
           clonedTarget.style.color = "#0f172a";
+
+          // Lock width but let height flow naturally to prevent cropping
+          if (isSatkerReport) {
+            clonedTarget.style.width = "1180px";
+            clonedTarget.style.minWidth = "1180px";
+            clonedTarget.style.height = "664px";
+            clonedTarget.style.minHeight = "664px";
+            clonedTarget.style.overflow = "hidden";
+          }
         }
 
         // ─── Step 2: Replace <style> tags to purge oklch ──────────
@@ -328,10 +387,11 @@ export async function captureAndPrint(elementId: string, fileName = "Dashboard")
         if (clonedTarget) {
           bakeComputedColors(element, clonedTarget);
         }
+
       }
     });
 
-    // Restore scroll constraints
+    // Restore scroll constraints for all report types
     element.style.overflow = originalOverflow;
     element.style.height = originalHeight;
     element.style.maxHeight = originalMaxHeight;
@@ -346,20 +406,23 @@ export async function captureAndPrint(elementId: string, fileName = "Dashboard")
 
     const PAGE_W = 297;
     const PAGE_H = 210;
-    const MARGIN = 10;
+    const MARGIN = elementId === "satker-report-card" ? 15 : 10;
 
     const usableW = PAGE_W - 2 * MARGIN;
     const usableH = PAGE_H - 2 * MARGIN;
 
     const pxPerMm = canvas.width / usableW;
     const sliceHeightPx = Math.floor(usableH * pxPerMm);
-    const totalPages = Math.ceil(canvas.height / sliceHeightPx);
+    
+    // Auto-detect single page capture requirements
+    const isSinglePage = forceSinglePage || elementId === "satker-report-card";
+    const totalPages = isSinglePage ? 1 : Math.ceil(canvas.height / sliceHeightPx);
 
     for (let page = 0; page < totalPages; page++) {
       if (page > 0) pdf.addPage();
 
       const srcY = page * sliceHeightPx;
-      const srcH = Math.min(sliceHeightPx, canvas.height - srcY);
+      const srcH = isSinglePage ? canvas.height : Math.min(sliceHeightPx, canvas.height - srcY);
       const srcW = canvas.width;
 
       const sliceCanvas = document.createElement("canvas");
@@ -373,12 +436,24 @@ export async function captureAndPrint(elementId: string, fileName = "Dashboard")
       ctx.drawImage(canvas, 0, srcY, srcW, srcH, 0, 0, srcW, srcH);
 
       const sliceDataUrl = sliceCanvas.toDataURL("image/jpeg", 0.92);
-      const destW = usableW;
-      const destH = srcH / pxPerMm;
+      
+      let destW = usableW;
+      let destH = srcH / pxPerMm;
+
+      // Fit inside page boundaries for single-page templates
+      if (isSinglePage && destH > usableH) {
+        const ratio = usableH / destH;
+        destH = usableH;
+        destW = destW * ratio;
+      }
+
+      // Compute offset coordinates for centering
+      const offsetX = MARGIN + (usableW - destW) / 2;
+      const offsetY = MARGIN + (usableH - destH) / 2;
 
       pdf.setFillColor(255, 255, 255);
       pdf.rect(0, 0, PAGE_W, PAGE_H, "F");
-      pdf.addImage(sliceDataUrl, "JPEG", MARGIN, MARGIN, destW, destH);
+      pdf.addImage(sliceDataUrl, "JPEG", offsetX, offsetY, destW, destH);
     }
 
     pdf.save(`${fileName}.pdf`);
